@@ -49,6 +49,6 @@ class userTypes extends CI_Controller {
 	
 	private function __set_form_validation_rules($userType_id) {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('description', 'Descripcion', 'required');
+        $this->form_validation->set_rules('description', 'Descripcion', 'required|min_length[3]');
     }
 }

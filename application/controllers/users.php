@@ -30,6 +30,7 @@ class Users extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->data['form_errors'] = validation_errors();
             
+            $options = array();
             $userTypes = Doctrine_Query::create()->select('ut.*')->from('userType as ut')->execute();
             foreach ($userTypes as $userType)
             	$options[$userType->userType_id] = $userType->description;

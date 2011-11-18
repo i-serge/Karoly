@@ -11,14 +11,12 @@ class Operation extends Doctrine_Record{
         $this->hasColumn('operation_id', 'integer', null, array(
             'primary' => true, 'autoincrement' => true));
         $this->hasColumn('description', 'string', 50, array(
-        	'unique'	=> 'true',
         	'notnull'	=> 'true'
         ));
         $this->hasColumn('controller', 'string', 255, array(
-        	'unique'	=> 'true',
         	'notnull'	=> 'true'
         ));
-        $this->hasColumn('operation_padre_id', 'integer', null, array(
+        $this->hasColumn('parent_operation_id', 'integer', null, array(
         	'notnull'	=> 'true'
         ));
     }
@@ -28,11 +26,23 @@ class Operation extends Doctrine_Record{
         $this->actAs('Timestampable');
         $this->actAs('SoftDelete');
         
-        // The userTypes that let this operation to be performed
+        // The userTypes that can execute this operation
         $this->hasMany('userType as userTypes', array(
         	'local'		=> 'operation_id',
         	'foreign'	=> 'userType_id',
         	'refClass'	=> 'userType_operation'
+        ));
+        
+        // The parent controller (if any) of this controller
+        $this->hasOne('operation as parent_operation', array(
+        	'local'		=> 'parent_operation_id',
+        	'foreign'	=> 'operation_id'
+        ));
+        
+        // The child operations (if any) of this operation
+        $this->hasMany('operation as child_operations', array(
+        	'local'		=> 'operation_id',
+        	'foreign'	=> 'parent_operation_id'
         ));
     }
 }
