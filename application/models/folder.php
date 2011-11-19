@@ -26,6 +26,18 @@ class Folder extends Doctrine_Record{
         	'refClass'	=> 'user_folder'
         ));
         
+        // The folder containing this folder (if any)
+        $this->hasOne('folder as folder_padre', array(
+        	'local'		=> 'folder_padre_id',
+        	'foreign'	=> 'folder_id'
+        ));
+        
+        // Folders that belong to this folder
+        $this->hasMany('folder as child_folders', array(
+        	'local'		=> 'folder_id',
+        	'foreign'	=> 'folder_padre_id'
+        ));
+        
         // Images that belong to this folder
         $this->hasMany('archivo as archivos', array(
         	'local'		=> 'folder_id',
