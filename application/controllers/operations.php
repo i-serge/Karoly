@@ -56,6 +56,12 @@ class operations extends CI_Controller {
         redirect('operations');
 	}
 	
+	public function tree(){
+		$this->data['operations'] = Doctrine_Query::create()->select('o.*')->from('operation o')->where('parent_operation_id = 0')->execute();
+		//if (!is_object($this->data['operations']))
+		$this->load->view('/operations/tree', $this->data);
+	}
+	
 	private function __set_form_validation_rules($operation_id) {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('description', 'Descripcion', 'required');
