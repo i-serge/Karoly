@@ -14,8 +14,6 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '';
-
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -26,8 +24,23 @@ $config['base_url']	= '';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
-
+if (strpos($_SERVER['SERVER_NAME'], 'ci.local') !== FALSE)
+{
+    $config['base_url'] = "http://karoly.ci.local";
+    $config['index_page'] = '';
+}else if (strpos($_SERVER['SERVER_NAME'], 'local.ci') !== FALSE)
+{
+    $config['base_url'] = "http://karoly.local.ci";
+    $config['index_page'] = '';
+} else if (strpos($_SERVER['SERVER_NAME'], 'ci.tnmx') !== FALSE)
+{
+    $config['base_url'] = "http://karoly.ci.tnmx.net";   
+    $config['index_page'] = '';
+} else
+{
+    $config['base_url'] = "http://karoly.com.mx";
+    $config['index_page'] = '';
+}
 /*
 |--------------------------------------------------------------------------
 | URI PROTOCOL
